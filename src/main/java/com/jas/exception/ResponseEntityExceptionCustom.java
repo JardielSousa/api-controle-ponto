@@ -22,8 +22,8 @@ public class ResponseEntityExceptionCustom extends ResponseEntityExceptionHandle
 		return new ResponseEntity<>(new Mensagem(defaultMessage), status);
 	}
 	
-	@ExceptionHandler(DateTimeParseException.class)
-	public ResponseEntity<Mensagem> ParseDataException(DateTimeParseException ex) {
+	@ExceptionHandler({DateTimeParseException.class, GenericException.class})
+	public ResponseEntity<Mensagem> ParseDataException(RuntimeException ex) {
 		return new ResponseEntity<>(new Mensagem(ex.getMessage()), HttpStatus.BAD_REQUEST);
 	}
 	
