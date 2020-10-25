@@ -4,13 +4,18 @@ import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jas.dto.Alocacao;
 import com.jas.dto.Momento;
+import com.jas.dto.Registro;
+import com.jas.dto.Relatorio;
 import com.jas.exception.GenericException;
 import com.jas.model.AlocacaoProjeto;
 import com.jas.model.RegistroPonto;
@@ -21,7 +26,6 @@ import com.jas.repository.RegistroPontoRepository;
 public class RegistroPontoService extends ModelService<RegistroPonto, RegistroPontoRepository> {
 
 	private static final Integer QTD_BATIDAS_DIA = 4;
-	private static final Integer QTD_HORAS_DIA = 8;
 	private static final Integer QTD_ALMOCO_DIA = 1;
 	
 	@Autowired
@@ -53,7 +57,16 @@ public class RegistroPontoService extends ModelService<RegistroPonto, RegistroPo
 		AlocacaoProjeto aloc = new AlocacaoProjeto(dia, tempoAlocacao.toString(), alocacao.getNomeProjeto());
 		this.alocacaoProjetoService.save(aloc);
 	}
-	
+
+	public Relatorio gerarRelatorio(String mes) {
+		Relatorio relatorio = new Relatorio(mes);
+		List<RegistroPonto> registroPontos = this.repository.getRegistros(mes);
+		Map<LocalDate, List<LocalTime>> collect = registroPontos.stream().collect(Collectors.groupingBy(ldt -> ldt.getDataHora().toLocalDate(), Collectors.mapping(ldt -> ldt.getDataHora().toLocalTime(), Collectors.toList())));
+		List<Registro> registros = collect.entrySet().stream().map(en -> new Registro(en.getKey(), en.getValue())).collect(Collectors.toList());
+		relatorio.setRegistros(registros);
+		return relatorio;
+	}
+
 	/* ************************************************* */
 	/* ************ MÉTODOS AUXILIARES ***************** */
 	/* ************************************************* */

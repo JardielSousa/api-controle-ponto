@@ -1,8 +1,6 @@
-package com.jas.projection;
+package com.jas.dto;
 
 import java.util.List;
-
-import com.jas.dto.Alocacao;
 
 public class Relatorio {
 
@@ -19,6 +17,10 @@ public class Relatorio {
 	private List<Alocacao> alocacaos;
 	
 	public Relatorio() { }
+	
+	public Relatorio(String mes) {
+		this.mes = mes;
+	}
 
 	public String getMes() {
 		return mes;

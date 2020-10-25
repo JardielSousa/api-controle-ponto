@@ -15,4 +15,7 @@ public interface RegistroPontoRepository extends JpaRepository<RegistroPonto, Lo
 
 	@Query("SELECT dataHora FROM RegistroPonto WHERE TO_CHAR(dataHora,'yyyy-MM-dd') = ?1 ORDER BY dataHora")
 	List<LocalDateTime> BatidasDia(String localDate);
+	
+	@Query("SELECT r FROM RegistroPonto r WHERE TO_CHAR(r.dataHora,'yyyy-MM') = ?1")
+	List<RegistroPonto> getRegistros(String mes);
 }
