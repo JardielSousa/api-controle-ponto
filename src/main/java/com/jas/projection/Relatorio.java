@@ -1,6 +1,8 @@
-package com.jas.dto;
+package com.jas.projection;
 
 import java.util.List;
+
+import com.jas.dto.Alocacao;
 
 public class Relatorio {
 

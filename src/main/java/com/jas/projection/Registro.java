@@ -1,4 +1,4 @@
-package com.jas.dto;
+package com.jas.projection;
 
 import java.util.List;
 

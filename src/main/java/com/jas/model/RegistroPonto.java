@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class RegistroPonto {
@@ -15,9 +14,6 @@ public class RegistroPonto {
 	private Long id;
 	
 	private LocalDateTime dataHora;
-	
-	@ManyToOne
-	private Projeto projeto;
 	
 	public RegistroPonto() { }
 
@@ -41,12 +37,4 @@ public class RegistroPonto {
 		this.dataHora = dataHora;
 	}
 
-	public Projeto getProjeto() {
-		return projeto;
-	}
-
-	public void setProjeto(Projeto projeto) {
-		this.projeto = projeto;
-	}
-	
 }
