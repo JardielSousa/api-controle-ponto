@@ -30,9 +30,6 @@ class RegistrarPontoControllerTest {
 	
 	@Autowired
 	private ObjectMapper objectMapper;
-	
-	@Autowired
-	private RegistroPontoController controller;
 
 	@Test
 	void batidasMomentoVazio() throws Exception {
@@ -54,6 +51,18 @@ class RegistrarPontoControllerTest {
 				.content(content))
 		.andExpect(status().isCreated())
 		.andExpect(content().string("{\"mensagem\":\"HorÃ¡rio registrado\"}"));
+	}
+	
+	@Test
+	void batidasMomentoFinalSemana() throws Exception {
+		Momento m = new Momento();
+		m.setDataHora("2020-10-25T07:20:40");
+		String content = this.objectMapper.writeValueAsString(m);
+		this.mockMvc.perform(post("/batidas")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(content))
+		.andExpect(status().isBadRequest())
+		.andExpect(content().string("{\"mensagem\":\"SÃ¡bado e domingo nÃ£o sÃ£o permitidos como dia de trabalho\"}"));
 	}
 	
 	@Test
@@ -136,7 +145,20 @@ class RegistrarPontoControllerTest {
 		this.mockMvc.perform(post("/alocacoes")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(content))
+		.andExpect(status().isBadRequest());
+	}
+	
+	@Test
+	void alocacoesObjetoPreenchido() throws Exception {
+		Alocacao al = new Alocacao();
+		al.setDia("2020-10-26");
+		al.setTempo("PT4H30M54S");
+		al.setNomeProjeto("JAS Corporation");
+		String content = this.objectMapper.writeValueAsString(al);
+		this.mockMvc.perform(post("/alocacoes")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(content))
 		.andExpect(status().isBadRequest())
-		.andExpect(content().string("{\"mensagem\":\"dia nÃ£o deve estar vazio\"}"));
+		.andExpect(content().string("{\"mensagem\":\"NÃ£o pode alocar tempo maior que o tempo trabalhado no dia\"}"));
 	}
 }
