@@ -61,9 +61,16 @@ public class RegistroPontoService extends ModelService<RegistroPonto, RegistroPo
 	public Relatorio gerarRelatorio(String mes) {
 		Relatorio relatorio = new Relatorio(mes);
 		List<RegistroPonto> registroPontos = this.repository.getRegistros(mes);
-		Map<LocalDate, List<LocalTime>> collect = registroPontos.stream().collect(Collectors.groupingBy(ldt -> ldt.getDataHora().toLocalDate(), Collectors.mapping(ldt -> ldt.getDataHora().toLocalTime(), Collectors.toList())));
-		List<Registro> registros = collect.entrySet().stream().map(en -> new Registro(en.getKey(), en.getValue())).collect(Collectors.toList());
+		
+		String horasTrabalhadas = getHorasTrabalhaadasRelatorio(registroPontos);
+		relatorio.setHorasTrabalhadas(horasTrabalhadas);
+		
+		
+		List<Registro> registros = getRegistrosRelatorio(registroPontos);
 		relatorio.setRegistros(registros);
+		
+
+		
 		return relatorio;
 	}
 
@@ -151,6 +158,27 @@ public class RegistroPontoService extends ModelService<RegistroPonto, RegistroPo
 		}
 		
 		return hrTrabalhada;
+	}
+
+	private String getHorasTrabalhaadasRelatorio(List<RegistroPonto> registroPontos) {
+		Duration duration = Duration.ZERO;
+		LocalDateTime anterior = null;
+		List<LocalDateTime> list = registroPontos.stream().map(RegistroPonto::getDataHora).collect(Collectors.toUnmodifiableList());
+		for (int i = 0; i < list.size(); i++) {
+			if (anterior != null && i % 2 != 0) {
+				duration = duration.plus(Duration.between(anterior, list.get(i)));
+			}
+			
+			anterior = list.get(i);
+		}
+		
+		return duration.toString();
+	}
+
+	private List<Registro> getRegistrosRelatorio(List<RegistroPonto> registroPontos) {
+		Map<LocalDate, List<LocalTime>> collect = registroPontos.stream().collect(Collectors.groupingBy(ldt -> ldt.getDataHora().toLocalDate(), Collectors.mapping(ldt -> ldt.getDataHora().toLocalTime(), Collectors.toList())));
+		List<Registro> registros = collect.entrySet().stream().map(en -> new Registro(en.getKey(), en.getValue())).collect(Collectors.toList());
+		return registros;
 	}
 
 }
