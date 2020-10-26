@@ -9,7 +9,9 @@ public class Momento {
 	@NotEmpty(message = "dataHora não deve estar vazio")
 	private String dataHora;
 	
-	public Momento() { }
+	public Momento() {
+		this.dataHora = "";
+	}
 
 	public String getDataHora() {
 		return dataHora;

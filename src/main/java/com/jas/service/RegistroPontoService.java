@@ -42,9 +42,9 @@ public class RegistroPontoService extends ModelService<RegistroPonto, RegistroPo
 	}
 
 	public void alocar(Alocacao alocacao) {
-		Duration horasTrabalhasDia = getHorasTrabalhasDia(alocacao.getDia(), null);	
+		Duration horasTrabalhasDia = getHorasTrabalhasDia(alocacao.getDia());	
 		Duration tempoAlocacao = Duration.parse(alocacao.getTempo());
-
+System.out.println("RegistroPontoService.alocar()");
 		LocalDate dia = LocalDate.parse(alocacao.getDia());
 		Duration horasAlocadas = this.alocacaoProjetoService.horasAlocadas(dia);
 		Duration durationLivreParaAlocacao = horasTrabalhasDia.minus(horasAlocadas);
@@ -136,7 +136,7 @@ public class RegistroPontoService extends ModelService<RegistroPonto, RegistroPo
 		return intervaloAlmoco;
 	}
 	
-	private Duration getHorasTrabalhasDia(String localDate, LocalDateTime dateTime) {
+	private Duration getHorasTrabalhasDia(String localDate) {
 		LocalDateTime atual = null;
 		LocalDateTime anterior = null;
 		Duration hrTrabalhada = Duration.ZERO;
@@ -149,10 +149,6 @@ public class RegistroPontoService extends ModelService<RegistroPonto, RegistroPo
 			}
 			
 			anterior = batidasDia.get(i);
-		}
-		
-		if (dateTime != null && batidasDia.size() % 2 != 0) {
-			hrTrabalhada = hrTrabalhada.plus(Duration.between(anterior, dateTime));
 		}
 		
 		return hrTrabalhada;

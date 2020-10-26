@@ -17,7 +17,11 @@ public class Alocacao {
 	@NotEmpty(message = "nomeProjeto não deve estar vazio")
 	private String nomeProjeto;
 	
-	public Alocacao() { }
+	public Alocacao() {
+		this.dia = "";
+		this.tempo = "";
+		this.nomeProjeto = "";
+	}
 
 	public String getDia() {
 		return dia;
