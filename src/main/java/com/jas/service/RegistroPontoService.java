@@ -65,11 +65,8 @@ public class RegistroPontoService extends ModelService<RegistroPonto, RegistroPo
 		String horasTrabalhadas = getHorasTrabalhaadasRelatorio(registroPontos);
 		relatorio.setHorasTrabalhadas(horasTrabalhadas);
 		
-		
 		List<Registro> registros = getRegistrosRelatorio(registroPontos);
 		relatorio.setRegistros(registros);
-		
-
 		
 		return relatorio;
 	}
