@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.jas.model.RegistroPonto;
+import com.jas.entity.RegistroPonto;
 import com.jas.projection.BatidasDiaQtdMax;
 
 public interface RegistroPontoRepository extends JpaRepository<RegistroPonto, Long> {

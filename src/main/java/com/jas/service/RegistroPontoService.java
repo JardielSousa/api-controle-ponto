@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jas.dto.Alocacao;
@@ -17,8 +16,8 @@ import com.jas.dto.Momento;
 import com.jas.dto.Registro;
 import com.jas.dto.Relatorio;
 import com.jas.exception.GenericException;
-import com.jas.model.AlocacaoProjeto;
-import com.jas.model.RegistroPonto;
+import com.jas.entity.AlocacaoProjeto;
+import com.jas.entity.RegistroPonto;
 import com.jas.projection.BatidasDiaQtdMax;
 import com.jas.repository.RegistroPontoRepository;
 
@@ -28,14 +27,18 @@ public class RegistroPontoService extends ModelService<RegistroPonto, RegistroPo
 	private static final Integer QTD_BATIDAS_DIA = 4;
 	private static final Integer QTD_ALMOCO_DIA = 1;
 	
-	@Autowired
 	private AlocacaoProjetoService alocacaoProjetoService;
-	
+
+	public RegistroPontoService(RegistroPontoRepository repository, AlocacaoProjetoService alocacaoProjetoService) {
+		super(repository);
+		this.alocacaoProjetoService = alocacaoProjetoService;
+	}
+
 	public RegistroPonto save(Momento momento) {
 		String dataHora = momento.getDataHora();
 		LocalDateTime dateTime = LocalDateTime.parse(dataHora);
 		validarData(dateTime);
-		RegistroPonto r = new RegistroPonto(dateTime);
+		RegistroPonto r = new RegistroPonto(null, dateTime);
 		RegistroPonto save = save(r);
 		
 		return save;
@@ -53,8 +56,8 @@ public class RegistroPontoService extends ModelService<RegistroPonto, RegistroPo
 		if (compareTo == -1) {
 			throw new GenericException("Não pode alocar tempo maior que o tempo trabalhado no dia");
 		}
-		
-		AlocacaoProjeto aloc = new AlocacaoProjeto(dia, tempoAlocacao.toString(), alocacao.getNomeProjeto());
+
+		AlocacaoProjeto aloc = new AlocacaoProjeto(null, dia, tempoAlocacao.toString(), alocacao.getNomeProjeto());
 		this.alocacaoProjetoService.save(aloc);
 	}
 

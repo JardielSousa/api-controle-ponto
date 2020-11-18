@@ -6,11 +6,15 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.jas.model.AlocacaoProjeto;
+import com.jas.entity.AlocacaoProjeto;
 import com.jas.repository.AlocacaoProjetoRepository;
 
 @Service
 public class AlocacaoProjetoService extends ModelService<AlocacaoProjeto, AlocacaoProjetoRepository> {
+
+	public AlocacaoProjetoService(AlocacaoProjetoRepository repository) {
+		super(repository);
+	}
 
 	public Duration horasAlocadas(LocalDate localDate) {
 		List<String> horasAlocadas = this.repository.horasAlocadas(localDate);

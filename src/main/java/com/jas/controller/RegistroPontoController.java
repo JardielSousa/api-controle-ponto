@@ -2,6 +2,7 @@ package com.jas.controller;
 
 import javax.validation.Valid;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,10 +19,10 @@ import com.jas.dto.Momento;
 import com.jas.dto.Relatorio;
 import com.jas.service.RegistroPontoService;
 
+@AllArgsConstructor
 @RestController
 public class RegistroPontoController {
 
-	@Autowired
 	private RegistroPontoService service;
 	
 	@PostMapping(value = "batidas", consumes = MediaType.APPLICATION_JSON_VALUE)
