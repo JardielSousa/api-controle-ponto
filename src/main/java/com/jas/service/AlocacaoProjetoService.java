@@ -12,6 +12,10 @@ import com.jas.repository.AlocacaoProjetoRepository;
 @Service
 public class AlocacaoProjetoService extends ModelService<AlocacaoProjeto, AlocacaoProjetoRepository> {
 
+	public AlocacaoProjetoService(AlocacaoProjetoRepository repository) {
+		super(repository);
+	}
+
 	public Duration horasAlocadas(LocalDate localDate) {
 		List<String> horasAlocadas = this.repository.horasAlocadas(localDate);
 		Duration duration = horasAlocadas.stream().map(Duration::parse).reduce(Duration.ZERO, Duration::plus);

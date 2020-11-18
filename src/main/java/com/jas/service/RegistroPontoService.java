@@ -28,9 +28,13 @@ public class RegistroPontoService extends ModelService<RegistroPonto, RegistroPo
 	private static final Integer QTD_BATIDAS_DIA = 4;
 	private static final Integer QTD_ALMOCO_DIA = 1;
 	
-	@Autowired
 	private AlocacaoProjetoService alocacaoProjetoService;
-	
+
+	public RegistroPontoService(RegistroPontoRepository repository, AlocacaoProjetoService alocacaoProjetoService) {
+		super(repository);
+		this.alocacaoProjetoService = alocacaoProjetoService;
+	}
+
 	public RegistroPonto save(Momento momento) {
 		String dataHora = momento.getDataHora();
 		LocalDateTime dateTime = LocalDateTime.parse(dataHora);

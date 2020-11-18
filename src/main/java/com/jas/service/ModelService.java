@@ -2,16 +2,17 @@ package com.jas.service;
 
 import java.util.Optional;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+@AllArgsConstructor
 public abstract class ModelService<T, R extends JpaRepository<T, Long>> {
 
-	@Autowired
 	protected R repository;
-	
+
 	public Page<T> findAll(Pageable pageable) {
 		return this.repository.findAll(pageable);
 	}
