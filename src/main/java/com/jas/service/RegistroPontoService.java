@@ -57,8 +57,8 @@ public class RegistroPontoService extends ModelService<RegistroPonto, RegistroPo
 		if (compareTo == -1) {
 			throw new GenericException("Não pode alocar tempo maior que o tempo trabalhado no dia");
 		}
-		
-		AlocacaoProjeto aloc = new AlocacaoProjeto(dia, tempoAlocacao.toString(), alocacao.getNomeProjeto());
+
+		AlocacaoProjeto aloc = new AlocacaoProjeto(null, dia, tempoAlocacao.toString(), alocacao.getNomeProjeto());
 		this.alocacaoProjetoService.save(aloc);
 	}
 
