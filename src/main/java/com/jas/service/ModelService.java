@@ -2,13 +2,13 @@ package com.jas.service;
 
 import java.util.Optional;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class ModelService<T, R extends JpaRepository<T, Long>> {
 
 	protected R repository;

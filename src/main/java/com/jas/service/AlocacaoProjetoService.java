@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.jas.model.AlocacaoProjeto;
+import com.jas.entity.AlocacaoProjeto;
 import com.jas.repository.AlocacaoProjetoRepository;
 
 @Service

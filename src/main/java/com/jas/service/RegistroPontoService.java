@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jas.dto.Alocacao;
@@ -17,8 +16,8 @@ import com.jas.dto.Momento;
 import com.jas.dto.Registro;
 import com.jas.dto.Relatorio;
 import com.jas.exception.GenericException;
-import com.jas.model.AlocacaoProjeto;
-import com.jas.model.RegistroPonto;
+import com.jas.entity.AlocacaoProjeto;
+import com.jas.entity.RegistroPonto;
 import com.jas.projection.BatidasDiaQtdMax;
 import com.jas.repository.RegistroPontoRepository;
 
@@ -39,7 +38,7 @@ public class RegistroPontoService extends ModelService<RegistroPonto, RegistroPo
 		String dataHora = momento.getDataHora();
 		LocalDateTime dateTime = LocalDateTime.parse(dataHora);
 		validarData(dateTime);
-		RegistroPonto r = new RegistroPonto(dateTime);
+		RegistroPonto r = new RegistroPonto(null, dateTime);
 		RegistroPonto save = save(r);
 		
 		return save;

@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.jas.model.AlocacaoProjeto;
+import com.jas.entity.AlocacaoProjeto;
 
 public interface AlocacaoProjetoRepository extends JpaRepository<AlocacaoProjeto, Long> {
 

@@ -18,7 +18,7 @@ import javax.validation.Valid;
 public class RegistroPontoController {
 
 	private final RegistroPontoService service;
-	
+
 	@PostMapping(value = "batidas", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Mensagem> batidas(@RequestBody @Valid Momento momento) {
 		this.service.save(momento);
