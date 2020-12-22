@@ -1,0 +1,17 @@
+#######################
+### DATA PROPERTIES ###
+#######################
+spring:
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/controleponto
+    username: postgres
+    password: postgres
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        temp:
+          use_jdbc_metadata_defaults: false
